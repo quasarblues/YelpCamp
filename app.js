@@ -1,9 +1,6 @@
-// if (process.env.NODE_ENV !== "production") {
-//     require('dotenv').config();
-// }
-
-require('dotenv').config();
-
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -25,9 +22,7 @@ const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 const MongoStore = require('connect-mongo');
 
-// const dbUrl = process.env.DB_URL;
-
-const dbUrl = 'mongodb://localhost:27017/yelp-camp';
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -164,7 +159,7 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err })
 })
 
-
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Serving on port ${port}`)
+})
